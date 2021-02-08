@@ -11,8 +11,13 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  #boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.grub.devices = [ "nodev" ];
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -23,8 +28,8 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp0s3.useDHCP = true;
+  #networking.useDHCP = false;
+  #networking.interfaces.enp0s3.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -40,7 +45,8 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome3.enable = true;
+  services.gnome3.core-utilities.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
   services.xserver.windowManager = {
     xmonad.enable = true;
     xmonad.enableContribAndExtras = true;
@@ -52,7 +58,7 @@
   };
   
   # Configure keymap in X11
-  services.xserver.layout = "br-abnt2";
+  services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
