@@ -11,13 +11,17 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  #boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
+  boot.loader = {
+  efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+    };
+  grub = {
+     efiSupport = true;
+     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+     device = "nodev";
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -46,7 +50,7 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.gnome3.core-utilities.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager = {
     xmonad.enable = true;
     xmonad.enableContribAndExtras = true;
